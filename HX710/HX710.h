@@ -48,6 +48,7 @@ typedef float variableType2; // This is for final value after scaling and offset
 #define HX710_SAMPLES 4 // get_value_small() samples, this you want to adjust, more isnt better. Draining performance (HX710_SAMPLES * read() * HX710_Delay) Devault values (4 * read(x) * 100ms) x = max 40 cycles for timeout.
 #define HX710_MAX_SAMPLES 64 // Max samples for get_value_small, this is for filtering out outliers. Devault is 64, yes this is random max but you not need more.
 #define HX710_TIMEOUT 20 //*CYCLES*  Timeout for waiting for sensor to become ready, adjust as needed based on your application and sensor behavior. This is in number of cycles, not time, so adjust based on your MCU frequency and sensor response time.
+#define dupa 4 //This is problematic and should be adjusted to your syclk MHz, current value is working for 48MHz. Name is appropriate :)
 #define HX710_Delay 100 //*TIME* This is problematic and should be adjusted to your syclk MHz, current value is working for 48MHz. 
 //This is delay between read() calls, if you are reading too FAST OR TO SLOOW you will get wrong unstable values, this is not a problem of library but cheap probably not orginal HX710* itself.
 //Tested value for 48MHz and DIF_MODE_40HZ is 100. This and dupa variable you must test yourself
@@ -74,7 +75,6 @@ typedef struct
   variableType2 		filtered_value_small;
   variableType2 		filter_coef;
   
-  int8_t        dupa; //This is problematic and should be adjusted to your syclk MHz, current value is working for 48MHz. Name is appropriate :)
 // dupa variable must be 1~2 µs, see datasheet. This value may not work due to not original sensor or some other reason
 }hx710_t;
     
