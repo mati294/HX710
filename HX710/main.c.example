@@ -46,8 +46,8 @@ int main(void)
 
 	while (1) {
 		 uint32_t start = HAL_GetTick();
-		 double pressFiltered = get_value_small_filtered(&HX_1, 6, DIF_MODE_40HZ, 2);
-		 double pressPa = get_value_small(&HX_1, 6, DIF_MODE_40HZ);
+		 float pressFiltered = get_value_small_filtered(&HX_1, 6, DIF_MODE_40HZ, 2);
+		 float pressPa = get_value_small(&HX_1, 6, DIF_MODE_40HZ);
 		 uint32_t stop = HAL_GetTick();
 		 uint32_t wynik = stop - start;
 		uint8_t value;
