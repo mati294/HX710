@@ -34,8 +34,6 @@ void hx710_init(hx710_t *hx710, GPIO_TypeDef *clk_gpio, uint16_t clk_pin, GPIO_T
   hx710->filtered_value_small = 0.0;
   hx710->filter_coef = 0.1;  // default filter coefficient (0.0 - 1.0)
 
-  // Timing adjustment (1-2 us per cycle, depends on MCU frequency)
-  hx710->dupa = 4;
 
   GPIO_InitTypeDef gpio = {0};
   gpio.Mode = GPIO_MODE_OUTPUT_PP;
@@ -95,12 +93,12 @@ uint8_t shiftIn(hx710_t *hx710) {
     for(i = 0; i < 8; ++i) {
     	HAL_GPIO_WritePin(hx710->clk_gpio, hx710->clk_pin, SET);
         // Small delay for signal stabilization (~1-2 μs on STM32)
-        //for(volatile int delay = 0; delay < hx710->dupa; delay++) { __NOP(); }
-        HX710B_delay_us(hx710->dupa);
+        //for(volatile int delay = 0; delay < dupa; delay++) { __NOP(); }
+        HX710B_delay_us(dupa);
         value |= HAL_GPIO_ReadPin(hx710->dat_gpio, hx710->dat_pin) << (7 - i);
         HAL_GPIO_WritePin(hx710->clk_gpio, hx710->clk_pin, RESET);
         //for(volatile int delay = 0; delay < hx710->dupa; delay++) { __NOP(); }
-        HX710B_delay_us(hx710->dupa);
+        HX710B_delay_us(dupa);
     }
 	return value;
 }
@@ -146,11 +144,11 @@ variableType1 read(hx710_t *hx710, uint8_t mode){
 
 	for (unsigned int i = 0; i < mode; i++) {
 		HAL_GPIO_WritePin(hx710->clk_gpio, hx710->clk_pin, SET);
-        HX710B_delay_us(hx710->dupa);
+        HX710B_delay_us(dupa);
 		//for(volatile int delay = 0; delay < hx710->dupa; delay++) { __NOP(); }
 		HAL_GPIO_WritePin(hx710->clk_gpio, hx710->clk_pin, RESET);
 		//for(volatile int delay = 0; delay < hx710->dupa; delay++) { __NOP(); }
-        HX710B_delay_us(hx710->dupa);
+        HX710B_delay_us(dupa);
 	}
 	interrupts();
 	// Replicate the most significant bit to pad out a 32-bit signed integer
