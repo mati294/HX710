@@ -59,6 +59,8 @@ Available modes:
 #define SPEC_40HZ 26     // HX710B DVDD-AVDD / HX710A TEMP
 #define DIF_MODE_40HZ 27 // tested and working
 
+```
+
 
 Sources:
 https://www.micros.com.pl/mediaserver/info-uphx710b%20smd.pdf
