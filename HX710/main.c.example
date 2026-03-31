@@ -1,0 +1,63 @@
+#include "HX710.h"
+
+hx710_t HX_1;
+
+int main(void)
+{
+
+  /* USER CODE BEGIN 1 */
+
+  /* USER CODE END 1 */
+
+  /* MCU Configuration--------------------------------------------------------*/
+
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+  HAL_Init();
+
+  /* USER CODE BEGIN Init */
+
+  /* USER CODE END Init */
+
+  /* Configure the system clock */
+  SystemClock_Config();
+
+  /* USER CODE BEGIN SysInit */
+
+  /* USER CODE END SysInit */
+
+  /* Initialize all configured peripherals */
+  MX_GPIO_Init();
+  MX_DMA_Init();
+  MX_I2C1_Init();
+  MX_USART1_UART_Init();
+  MX_TIM1_Init();
+  MX_TIM3_Init();
+  MX_TIM2_Init();
+  MX_ADC1_Init();
+  /* USER CODE BEGIN 2 */
+  /* USER CODE END 2 */
+  /* Infinite loop */
+  /* USER CODE BEGIN WHILE */
+
+	hx710_init(&HX_1, GPIOD, GPIO_PIN_1, GPIOD, GPIO_PIN_2);
+	tare_inteligent(&HX_1, 10, DIF_MODE_40HZ);
+	set_filter_coefficient(&HX_1, 0.15);
+
+
+	while (1) {
+		 uint32_t start = HAL_GetTick();
+		 double pressFiltered = get_value_small_filtered(&HX_1, 6, DIF_MODE_40HZ, 2);
+		 double pressPa = get_value_small(&HX_1, 6, DIF_MODE_40HZ);
+		 uint32_t stop = HAL_GetTick();
+		 uint32_t wynik = stop - start;
+		uint8_t value;
+		value++; //  brakepoint here
+
+	}
+
+    /* USER CODE END WHILE */
+
+    /* USER CODE BEGIN 3 */
+
+  /* USER CODE END 3 */
+}
