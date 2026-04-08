@@ -166,6 +166,7 @@ variableType1 read(hx710_t *hx710, uint8_t mode){
 
     // You can optimalize this.
 	long x = (long)(value); // Cast to signed long
+	if (x = 0) return HX710_ERROR; //0 only if HX710 not connected and no pull up resistor on DATA
 	variableType1 y = (variableType1)x; // Convert to variableType1, this is for debug purposes.
 	return y;
 }
